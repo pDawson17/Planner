@@ -11,7 +11,7 @@ const QueueDisplay = ({ onPress, item }) => {
 
 const styles = {
   buttonStyle: {
-    backgroundColor: "red",
+    backgroundColor: "blue",
     height: 30,
     alignSelf: "stretch"
   },

@@ -12,9 +12,9 @@ const Toolbar = ({
 }) => {
   return (
     <View style={styles.viewStyle}>
-      <IconButton iconName={buttonOne} onPress={onPressOne} />
-      <IconButton iconName={buttonTwo} onPress={onPressTwo} />
-      <IconButton iconName={buttonThree} onPress={onPressThree} />
+      <IconButton iconName={buttonOne} onPress={onPressOne} size={30} />
+      <IconButton iconName={buttonTwo} onPress={onPressTwo} size={30} />
+      <IconButton iconName={buttonThree} onPress={onPressThree} size={30} />
     </View>
   );
 };
@@ -31,4 +31,4 @@ const styles = {
   }
 };
 
-export default Toolbar;
+export { Toolbar };

@@ -3,3 +3,4 @@ export * from "./Section";
 export * from "./Input";
 export * from "./RainbowButton";
 export * from "./IconButton";
+export * from "./Toolbar";

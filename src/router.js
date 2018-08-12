@@ -1,21 +1,35 @@
 import React from "react";
 import HomePage from "./pages/HomePage";
 import AddEventsPage from "./pages/AddEventsPage";
-import EventDetailPage from "./pages/EventDetailPage";
+import EventCreationPage from "./pages/EventCreationPage";
+import WeekDisplayPage from "./pages/WeekDisplayPage";
 import {
   createBottomTabNavigator,
   createStackNavigator,
   createSwitchNavigator
 } from "react-navigation";
 
-const HomeNavigator = createBottomTabNavigator({
-  Home: HomePage,
-  Add: AddEventsPage
-});
+const HomeNavigator = createBottomTabNavigator(
+  {
+    Home: HomePage,
+    Add: AddEventsPage,
+    WeekDisplay: WeekDisplayPage
+  },
+  {
+    lazy: false
+  }
+);
 
-const MNavigator = createStackNavigator({
-  EventDetail: EventDetailPage
-});
+const MNavigator = createStackNavigator(
+  {
+    EventCreate: EventCreationPage
+  },
+  {
+    navigationOptions: {
+      header: null
+    }
+  }
+);
 
 export const MainNavigator = createSwitchNavigator(
   {

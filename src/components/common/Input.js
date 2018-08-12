@@ -1,10 +1,9 @@
 import React from "react";
 import { Text, TextInput, View } from "react-native";
-import { IconButton } from "./index";
-const Input = ({ onChangeText, value, placeholder, onPress }) => {
+
+const Input = ({ onChangeText, value, placeholder }) => {
   return (
     <View style={styles.viewStyle}>
-      <IconButton iconName="plus-circle" onPress={onPress} size={40} />
       <TextInput
         placeholder={placeholder}
         style={styles.textInputStyle}

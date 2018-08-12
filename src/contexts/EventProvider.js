@@ -5,31 +5,43 @@ export const EventConsumer = EventContext.Consumer;
 
 class EventProvider extends Component {
   state = {
+    queue: [],
     upcomingEvents: [],
-    selectedDate: ""
+    selectedDate: "",
+    currentEvent: {},
+    currentDate: "",
+    nextSevenDays: []
   };
-
+  //use findIndex to find index of selected event
   render() {
     return (
       <EventContext.Provider
         value={{
           state: this.state,
+          setDate: date => this.setState({ currentDate: date }),
           setSelectedDate: day =>
             this.setState({
               selectedDate: day.dateString
             }),
-          addUpcomingEvent: () =>
+          addUpcomingEvent: obj =>
             this.setState({
-              upcomingEvents: this.state.upcomingEvents.concat([
+              upcomingEvents: this.state.upcomingEvents.concat([obj])
+            }),
+          addEventToQueue: () =>
+            this.setState({
+              queue: this.state.queue.concat([
                 {
-                  date: Date(),
+                  date: this.state.currentDate,
                   content: "",
                   category: "",
                   dread: "",
                   dueDate: ""
                 }
               ])
-            })
+            }),
+          setQueue: arr => this.setState({ queue: arr }),
+          setCurrentEvent: obj => this.setState({ currentEvent: obj }),
+          setNextSevenDays: l => this.setState({ nextSevenDays: l })
         }}
       >
         {this.props.children}

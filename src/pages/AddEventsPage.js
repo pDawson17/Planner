@@ -12,39 +12,27 @@ export default props => (
 //this.state contains queue; when queue elem is popped, edit reminder in
 //context; update queue in componentDidUpdate
 class AddEventsPage extends Component {
-  state = {
-    queue: []
-  };
   _renderItem = ({ item }) => {
-    return (
-      <QueueDisplay
-        item={item}
-        onPress={() => this.props.navigation.navigate("EventDetail")}
-      />
-    );
+    return <QueueDisplay item={item} onPress={() => this.queueOnPress(item)} />;
   };
+  queueOnPress(item) {
+    this.props.contextProp.setCurrentEvent(item);
+    this.props.navigation.navigate("EventCreate");
+  }
   render() {
-    const { addUpcomingEvent } = this.props.contextProp.state;
+    const { queue, upcomingEvents } = this.props.contextProp.state;
     return (
       <View>
         <FlatList
           renderItem={this._renderItem}
-          data={this.state.queue}
-          extraData={this.state}
+          data={queue}
+          extraData={queue}
           keyExtractor={item => item.date}
         />
         <IconButton
           iconName="rocket"
           size={40}
-          onPress={() =>
-            this.setState({
-              queue: this.state.queue.concat([
-                {
-                  date: Date()
-                }
-              ])
-            })
-          }
+          onPress={this.props.contextProp.addEventToQueue}
         />
       </View>
     );
