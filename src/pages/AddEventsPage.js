@@ -27,7 +27,7 @@ class AddEventsPage extends Component {
           renderItem={this._renderItem}
           data={queue}
           extraData={queue}
-          keyExtractor={item => item.date}
+          keyExtractor={item => item.key}
         />
         <IconButton
           iconName="rocket"

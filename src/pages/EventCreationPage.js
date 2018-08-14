@@ -1,5 +1,13 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, Picker } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Picker,
+  Slider,
+  Switch,
+  ScrollView
+} from "react-native";
 import { EventConsumer } from "../contexts/EventProvider";
 import { CalendarList, Agenda } from "react-native-calendars";
 import {
@@ -24,10 +32,54 @@ class EventCreationPage extends Component {
     this.findPos();
   }
   state = {
+    categories: [
+      {
+        type: "event",
+        color: "red"
+      },
+      {
+        type: "appointment",
+        color: "blue"
+      },
+      {
+        type: "task",
+        color: "green"
+      }
+    ],
+    category: {},
     title: "",
     dueDate: "",
+    dueTime: "12:00",
+    duration: 0,
     finishedSelection: "blue",
-    qpos: -1
+    qpos: -1,
+    ampm: false,
+    timeChoice: [
+      "12:00",
+      "12:30",
+      "01:00",
+      "01:30",
+      "02:00",
+      "02:30",
+      "03:00",
+      "03:30",
+      "04:00",
+      "04:30",
+      "05:00",
+      "05:30",
+      "06:00",
+      "06:30",
+      "07:00",
+      "07:30",
+      "08:00",
+      "08:30",
+      "09:00",
+      "09:30",
+      "10:00",
+      "10:30",
+      "11:00",
+      "11:30"
+    ]
   };
   findPos() {
     const { queue, currentEvent } = this.props.contextProp.state;
@@ -38,11 +90,34 @@ class EventCreationPage extends Component {
     }
     this.setState({ qpos: i });
   }
+  //TODO find length and start pos functions
+  findLength() {
+    let x = 60 * this.state.duration;
+    return x;
+  }
+  findStartSlot() {
+    const x = parseInt(this.state.dueTime, 10);
+    var z = 0;
+    if (x === 12) {
+      z = 0;
+    } else {
+      z = x * 2;
+    }
+    if (this.state.dueTime.substring(3, 5) === "30") {
+      z += 0.5;
+    }
+    if (!this.state.ampm) {
+      z += 24;
+    }
+    return z * 60;
+  }
   setValue = () => {
-    console.log("SETVALUE");
-    console.log("dueDate is" + this.state.dueDate);
     const { queue, selectedEvent } = this.props.contextProp.state;
     let temp = JSON.parse(JSON.stringify(queue[this.state.qpos]));
+    temp.category = this.state.category;
+    temp.length = this.findLength();
+    temp.startSlot = this.findStartSlot();
+    temp.dueTime = this.state.dueTime;
     temp.content = this.state.title;
     temp.dueDate = this.state.dueDate;
     this.props.contextProp.addUpcomingEvent(temp);
@@ -61,12 +136,29 @@ class EventCreationPage extends Component {
     } = this.props.contextProp.state;
     const { setSelectedDate, addUpcomingEvent } = this.props.contextProp;
     return (
-      <Background>
+      <ScrollView>
         <Toolbar
           buttonOne="arrow-left"
           onPressOne={() => this.props.navigation.navigate("Add")}
         />
         <Section>
+          <Slider
+            minimumuValue={1}
+            maximumValue={8}
+            style={{ width: 250 }}
+            step={0.25}
+            onSlidingComplete={value => this.setState({ duration: value })}
+          />
+          <Slider
+            value={0}
+            minimumuValue={0}
+            maximumValue={2}
+            step={1}
+            style={{ width: 250 }}
+            onSlidingComplete={value =>
+              this.setState({ category: this.state.categories[value] })
+            }
+          />
           <Input
             value={this.state.title}
             onChangeText={value => this.setState({ title: value })}
@@ -82,12 +174,27 @@ class EventCreationPage extends Component {
               return <Picker.Item label={item} value={index} key={index} />;
             })}
           </Picker>
+          <Picker
+            selectedValue={this.state && this.state.dueTime}
+            onValueChange={value =>
+              this.setState({ dueTime: this.state.timeChoice[value] })
+            }
+            style={{ height: 50, width: 100 }}
+          >
+            {this.state.timeChoice.map((item, index) => {
+              return <Picker.Item label={item} value={index} key={index} />;
+            })}
+          </Picker>
+          <Switch
+            value={this.state.ampm}
+            onValueChange={value => this.setState({ ampm: !this.state.ampm })}
+          />
         </Section>
         <Section>
           <RainbowButton onPress={this.setValue} />
-          <Text style={{ color: "yellow" }}>{this.state.dueDate}</Text>
+          <Text style={{ color: "yellow" }}>{this.state.dueTime}</Text>
         </Section>
-      </Background>
+      </ScrollView>
     );
   }
 }

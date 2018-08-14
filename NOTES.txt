@@ -1,0 +1,18 @@
+Libraries to check out:
+rn-sliding-button ---- (slide to press instead of push)
+react-native-animatable
+reat-native-notifications
+react-native-gifted-chat
+
+TODO:
+-templates for event creation
+-further options for choosing date beyond nextSevenDays
+-different colors in dayview for events
+-ANIMATIONS
+-sharing page (do last)
+-notifications
+-format time to find 'freetime'
+-date marking on main calendar
+-weekview event stacking
+-deal w/ events lasting from one day to the next
+-cleaning

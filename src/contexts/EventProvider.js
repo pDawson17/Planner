@@ -1,4 +1,5 @@
 import React, { createContext, Component } from "react";
+import { Async } from "react-native";
 
 export const EventContext = createContext();
 export const EventConsumer = EventContext.Consumer;
@@ -12,6 +13,26 @@ class EventProvider extends Component {
     currentDate: "",
     nextSevenDays: []
   };
+  async _saveData() {
+    try {
+      await AsyncStorage.setItem(
+        "upcomingEvents",
+        JSON.stringify(this.state.upcomingEvents)
+      );
+      await AsyncStorage.setItem("queue", JSON.stringify(this.state.queue));
+    } catch (error) {
+      console.log("did not save");
+    }
+  }
+  async _retreiveData() {
+    try {
+      const _upcomingEvents = await AsyncStorage.getItem("upcomingEvents");
+      const _queue = await AsyncStorage.getItem("queue");
+      this.setState({ upcomingEvents: _upcomingEvents, queue: _queue });
+    } catch (error) {
+      console.log("did not load");
+    }
+  }
   //use findIndex to find index of selected event
   render() {
     return (
@@ -31,17 +52,24 @@ class EventProvider extends Component {
             this.setState({
               queue: this.state.queue.concat([
                 {
+                  key: Date(),
                   date: this.state.currentDate,
                   content: "",
-                  category: "",
+                  dueTime: "",
+                  note: "",
+                  category: {},
                   dread: "",
-                  dueDate: ""
+                  dueDate: "",
+                  length: 60,
+                  startSlot: 0
                 }
               ])
             }),
           setQueue: arr => this.setState({ queue: arr }),
           setCurrentEvent: obj => this.setState({ currentEvent: obj }),
-          setNextSevenDays: l => this.setState({ nextSevenDays: l })
+          setNextSevenDays: l => this.setState({ nextSevenDays: l }),
+          saveData: this._saveData(),
+          retrieveData: this._retreiveData()
         }}
       >
         {this.props.children}

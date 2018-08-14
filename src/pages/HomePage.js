@@ -17,6 +17,7 @@ class HomePage extends Component {
     let date = y.substring(0, 10);
     this.props.contextProp.setDate(date);
     this.generateSevenDays();
+    this.props.contextProp.retrieveData;
   }
   generateSevenDays() {
     let l = [];
@@ -30,7 +31,6 @@ class HomePage extends Component {
       x = new Date(fd.year, fd.month, fd.date + i);
       y = x.toISOString();
       day = y.substring(0, 10);
-      console.log("Day" + day);
       l.push(day);
     }
     this.props.contextProp.setNextSevenDays(l);
