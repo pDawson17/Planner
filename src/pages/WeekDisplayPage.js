@@ -19,7 +19,6 @@ class WeekDisplayPage extends Component {
   state = {
     dailyEvents: [[], [], [], [], [], [], []]
   };
-
   divideEvents() {
     let x = [];
     //change to DueDate later
@@ -33,6 +32,7 @@ class WeekDisplayPage extends Component {
       }
       x.push(c);
     }
+    this.props.contextProp.setDailyEvents(x);
     this.setState({ dailyEvents: x });
   }
   render() {

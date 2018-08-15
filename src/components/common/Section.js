@@ -7,6 +7,10 @@ const Section = props => {
 
 const styles = {
   viewStyle: {
+    marginBottom: 30,
+    marginLeft: 10,
+    marginRight: 10,
+    borderRadius: 60,
     backgroundColor: "transparent",
     flex: 1,
     justifyContent: "center",

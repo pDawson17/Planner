@@ -3,13 +3,16 @@ rn-sliding-button ---- (slide to press instead of push)
 react-native-animatable
 reat-native-notifications
 react-native-gifted-chat
+react-native-popup-menu
 
 TODO:
--templates for event creation
+-templates for event creation -- make #1 work & save templates, also add choice before queue!!
+-resize weekview to be better
+-write function that allows you to calculate function HEIGHT for stacking safely
 -further options for choosing date beyond nextSevenDays
--different colors in dayview for events
 -ANIMATIONS
 -sharing page (do last)
+-repeated events
 -notifications
 -format time to find 'freetime'
 -date marking on main calendar

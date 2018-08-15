@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import { EventConsumer } from "../contexts/EventProvider";
 import { CalendarList, Agenda } from "react-native-calendars";
-import { IconButton } from "../components/common";
+import { IconButton, Section } from "../components/common";
+import ToDoList from "../components/ToDoList";
 
 export default props => (
   <EventConsumer>
@@ -19,6 +20,7 @@ class HomePage extends Component {
     this.generateSevenDays();
     this.props.contextProp.retrieveData;
   }
+
   generateSevenDays() {
     let l = [];
     curr = new Date();
@@ -35,35 +37,102 @@ class HomePage extends Component {
     }
     this.props.contextProp.setNextSevenDays(l);
   }
+  renderDayPreview() {
+    const { dailyEvents } = this.props.contextProp.state;
+    return (
+      <View
+        style={{
+          flexDirection: "row",
+          backgroundColor: "blue",
+          height: 400,
+          alignSelf: "stretch"
+        }}
+      >
+        <View style={{ flex: 1 }}>
+          {dailyEvents[0].map(item => {
+            return (
+              <View
+                key={item.key}
+                style={{
+                  alignItems: "center",
+                  borderRadius: 100,
+                  width: 100,
+                  height: item.length,
+                  backgroundColor: item.category.color
+                }}
+              >
+                <Text>{item.content}</Text>
+              </View>
+            );
+          })}
+        </View>
+        <View style={{ flex: 1 }}>
+          {dailyEvents[1].map(item => {
+            return (
+              <View
+                key={item.key}
+                style={{
+                  alignItems: "center",
+                  borderRadius: 100,
+                  width: 100,
+                  height: item.length,
+                  backgroundColor: item.category.color
+                }}
+              >
+                <Text>{item.content}</Text>
+              </View>
+            );
+          })}
+        </View>
+        <View style={{ flex: 1 }}>
+          {dailyEvents[2].map(item => {
+            return (
+              <View
+                key={item.key}
+                style={{
+                  alignItems: "center",
+                  borderRadius: 100,
+                  width: 100,
+                  height: item.length,
+                  backgroundColor: item.category.color
+                }}
+              >
+                <Text>{item.content}</Text>
+              </View>
+            );
+          })}
+        </View>
+      </View>
+    );
+  }
   render() {
     const {
       selectedDate,
       upcomingEvents,
-      nextSevenDays
+      nextSevenDays,
+      threeDayPreview
     } = this.props.contextProp.state;
     const {
       setSelectedDate,
       addUpcomingEvent,
       addEventToQueue
     } = this.props.contextProp;
+
     return (
-      <View>
-        <CalendarList
-          minDate={Date()}
-          horizontal={true}
-          pastScrollRange={0}
-          futureScrollRange={12}
-          scrollEnabled={true}
-          onDayPress={setSelectedDate}
-        />
-        <Text> {nextSevenDays[2]} </Text>
-        <IconButton onPress={addUpcomingEvent} iconName={"rocket"} size={40} />
-        <IconButton
-          onPress={addEventToQueue}
-          iconName={"plus-circle"}
-          size={40}
-        />
-      </View>
+      <ScrollView>
+        <View
+          style={{
+            backgroundColor: "black",
+            height: 200,
+            alignSelf: "stretch",
+            alignItems: "center"
+          }}
+        >
+          <Text style={{ color: "white" }}>HEADER</Text>
+        </View>
+        {this.renderDayPreview()}
+        <ToDoList eventsList={upcomingEvents} />
+      </ScrollView>
     );
   }
 }

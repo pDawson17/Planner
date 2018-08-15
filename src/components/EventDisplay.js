@@ -29,11 +29,10 @@ const EventDisplay = ({ date, events }) => {
     "11:00": 22,
     "11:30": 23
   };
-
   return (
     <View
       style={{
-        backgroundColor: "orange",
+        backgroundColor: "#4B4B34",
         height: 90,
         borderTopWidth: 1,
         borderColor: "black"
@@ -44,13 +43,15 @@ const EventDisplay = ({ date, events }) => {
           <View
             key={item.key}
             style={{
-              height: 40,
+              alignItems: "center",
+              borderRadius: 100,
+              height: 30,
               marginLeft: item.startSlot,
               width: item.length,
               backgroundColor: item.category.color
             }}
           >
-            <Text>{item.startSlot}</Text>
+            <Text>{item.content}</Text>
           </View>
         );
       })}

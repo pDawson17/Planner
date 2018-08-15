@@ -25,28 +25,29 @@ export default props => (
   </EventConsumer>
 );
 
+const categories = [
+  {
+    type: "event",
+    color: "#D9D85A"
+  },
+  {
+    type: "appointment",
+    color: "#816196"
+  },
+  {
+    type: "task",
+    color: "#80BD6A"
+  }
+];
 class EventCreationPage extends Component {
   componentDidMount() {
     this.setState({ finishedSelection: "red" });
     this.setState({ dueDate: this.props.contextProp.state.nextSevenDays[0] });
     this.findPos();
   }
+
   state = {
-    categories: [
-      {
-        type: "event",
-        color: "red"
-      },
-      {
-        type: "appointment",
-        color: "blue"
-      },
-      {
-        type: "task",
-        color: "green"
-      }
-    ],
-    category: {},
+    category: categories[0],
     title: "",
     dueDate: "",
     dueTime: "12:00",
@@ -90,7 +91,6 @@ class EventCreationPage extends Component {
     }
     this.setState({ qpos: i });
   }
-  //TODO find length and start pos functions
   findLength() {
     let x = 60 * this.state.duration;
     return x;
@@ -143,6 +143,7 @@ class EventCreationPage extends Component {
         />
         <Section>
           <Slider
+            value={1}
             minimumuValue={1}
             maximumValue={8}
             style={{ width: 250 }}
@@ -150,13 +151,13 @@ class EventCreationPage extends Component {
             onSlidingComplete={value => this.setState({ duration: value })}
           />
           <Slider
-            value={0}
-            minimumuValue={0}
-            maximumValue={2}
+            value={1}
+            minimumuValue={1}
+            maximumValue={3}
             step={1}
             style={{ width: 250 }}
             onSlidingComplete={value =>
-              this.setState({ category: this.state.categories[value] })
+              this.setState({ category: categories[value - 1] })
             }
           />
           <Input
