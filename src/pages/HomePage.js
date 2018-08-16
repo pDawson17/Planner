@@ -43,8 +43,8 @@ class HomePage extends Component {
       <View
         style={{
           flexDirection: "row",
-          backgroundColor: "blue",
-          height: 400,
+          backgroundColor: "#0FBCF9",
+          height: 325,
           alignSelf: "stretch"
         }}
       >
@@ -57,7 +57,7 @@ class HomePage extends Component {
                   alignItems: "center",
                   borderRadius: 100,
                   width: 100,
-                  height: item.length / 10,
+                  height: item.length / 2,
                   backgroundColor: item.category.color
                 }}
               >
@@ -83,7 +83,7 @@ class HomePage extends Component {
                   alignItems: "center",
                   borderRadius: 100,
                   width: 100,
-                  height: item.length / 10,
+                  height: item.length / 2,
                   backgroundColor: item.category.color
                 }}
               >
@@ -101,7 +101,7 @@ class HomePage extends Component {
                   alignItems: "center",
                   borderRadius: 100,
                   width: 100,
-                  height: item.length / 10,
+                  height: item.length / 2,
                   backgroundColor: item.category.color
                 }}
               >
@@ -130,13 +130,16 @@ class HomePage extends Component {
       <ScrollView>
         <View
           style={{
-            backgroundColor: "black",
+            backgroundColor: "#1E272E",
             height: 200,
             alignSelf: "stretch",
-            alignItems: "center"
+            alignItems: "center",
+            justifyContent: "center"
           }}
         >
-          <Text style={{ color: "white" }}>HEADER</Text>
+          <Text style={{ color: "#0FBCF9", fontSize: 70 }}>
+            {Date().substring(3, 7)}
+          </Text>
         </View>
         {this.renderDayPreview()}
         <ToDoList eventsList={upcomingEvents} />

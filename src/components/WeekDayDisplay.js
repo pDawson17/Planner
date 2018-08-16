@@ -124,13 +124,12 @@ const WeekDayDisplay = ({ date, events }) => {
 
 const styles = {
   dayContainerStyle: {
-    backgroundColor: "orange",
     height: 40, //usually 94
     borderBottomWidth: 2,
     borderColor: "#707070"
   },
   blankItemStyle: {
-    backgroundColor: "yellow",
+    backgroundColor: "#FFDD59",
     width: 60
   }
 };

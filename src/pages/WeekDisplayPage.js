@@ -51,6 +51,7 @@ class WeekDisplayPage extends Component {
     this.props.contextProp.setDailyEvents(x);
     this.setState({ dailyEvents: x });
   }
+
   render() {
     const { nextSevenDays } = this.props.contextProp.state;
     return (
@@ -59,34 +60,42 @@ class WeekDisplayPage extends Component {
           <WeekDayDisplay
             date={nextSevenDays[0]}
             events={this.state.dailyEvents[0]}
+            context={this.props.contextProp}
           />
           <EventDisplay
             date={nextSevenDays[0]}
             events={this.state.dailyEvents[0]}
+            context={this.props.contextProp}
           />
           <EventDisplay
             date={nextSevenDays[1]}
             events={this.state.dailyEvents[1]}
+            context={this.props.contextProp}
           />
           <EventDisplay
             date={nextSevenDays[2]}
             events={this.state.dailyEvents[2]}
+            context={this.props.contextProp}
           />
           <EventDisplay
             date={nextSevenDays[3]}
             events={this.state.dailyEvents[3]}
+            context={this.props.contextProp}
           />
           <EventDisplay
             date={nextSevenDays[4]}
             events={this.state.dailyEvents[4]}
+            context={this.props.contextProp}
           />
           <EventDisplay
             date={nextSevenDays[5]}
             events={this.state.dailyEvents[5]}
+            context={this.props.contextProp}
           />
           <EventDisplay
             date={nextSevenDays[6]}
             events={this.state.dailyEvents[6]}
+            context={this.props.contextProp}
           />
         </View>
       </ScrollView>

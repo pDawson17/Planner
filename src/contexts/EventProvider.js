@@ -21,6 +21,10 @@ class EventProvider extends Component {
         "upcomingEvents",
         JSON.stringify(this.state.upcomingEvents)
       );
+      await AsyncStorage.setItem(
+        "repeatedEvents",
+        JSON.stringify(this.state.repeatedEvents)
+      );
       await AsyncStorage.setItem("queue", JSON.stringify(this.state.queue));
     } catch (error) {
       console.log("did not save");
@@ -30,9 +34,36 @@ class EventProvider extends Component {
     try {
       const _upcomingEvents = await AsyncStorage.getItem("upcomingEvents");
       const _queue = await AsyncStorage.getItem("queue");
-      this.setState({ upcomingEvents: _upcomingEvents, queue: _queue });
+      const _repeatedEvents = await AsyncStorage.getItem("repeatedEvents");
+      this.setState({
+        upcomingEvents: _upcomingEvents,
+        queue: _queue,
+        repeatedEvents: _repeatedEvents
+      });
     } catch (error) {
       console.log("did not load");
+    }
+  }
+
+  deleteUpcomingEvent(obj) {
+    if (obj.repeated) {
+      for (var i = 0; i < this.state.repeatedEvents.length; i++) {
+        if (obj.key === this.state.repeatedEvents[i].key) {
+          break;
+        }
+      }
+      var x = this.state.repeatedEvents.slice(0);
+      x.splice(i, 1);
+      this.setState({ repeatedEvents: x });
+    } else {
+      for (var i = 0; i < this.state.upcomingEvents.length; i++) {
+        if (obj.key === this.state.upcomingEvents[i].key) {
+          break;
+        }
+      }
+      var x = this.state.upcomingEvents.slice(0);
+      x.splice(i, 1);
+      this.setState({ upcomingEvents: x });
     }
   }
   //use findIndex to find index of selected event
@@ -81,7 +112,8 @@ class EventProvider extends Component {
           setRepeatedEvents: revent =>
             this.setState({
               repeatedEvents: this.state.repeatedEvents.concat([revent])
-            })
+            }),
+          deleteEvent: obj => this.deleteUpcomingEvent(obj)
         }}
       >
         {this.props.children}

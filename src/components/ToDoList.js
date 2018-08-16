@@ -69,7 +69,7 @@ const styles = {
   listStyle: {
     flex: 1,
     borderRadius: 100,
-    backgroundColor: "green"
+    backgroundColor: "#F53B57"
   },
   viewStyle: {
     height: 300,

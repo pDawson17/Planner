@@ -29,15 +29,15 @@ export default props => (
 const categories = [
   {
     type: "event",
-    color: "#D9D85A"
+    color: "#FF5E57"
   },
   {
     type: "appointment",
-    color: "#816196"
+    color: "#0BE881"
   },
   {
     type: "task",
-    color: "#80BD6A"
+    color: "#3C40C6"
   }
 ];
 const weekDays = [
@@ -166,9 +166,12 @@ class EventCreationPage extends Component {
     temp.dueDate = this.state.dueDate;
     if (this.state.repeated) {
       temp.repeatedDays = this.state.repeatedDays;
+      temp.repeated = true;
       this.props.contextProp.setRepeatedEvents(temp);
+    } else {
+      temp.repeated = false;
+      this.props.contextProp.addUpcomingEvent(temp);
     }
-    this.props.contextProp.addUpcomingEvent(temp);
     let arr = queue.slice();
     arr.splice(this.state.qpos, 1);
     this.props.contextProp.setQueue(arr);
@@ -200,7 +203,6 @@ class EventCreationPage extends Component {
           />
           <Text>Duration: {this.state.duration} hrs</Text>
           <Slider
-            value={1}
             minimumuValue={0}
             maximumValue={2}
             step={1}
