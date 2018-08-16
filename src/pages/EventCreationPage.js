@@ -18,13 +18,14 @@ import {
   RainbowButton,
   Toolbar
 } from "../components/common";
+import Modal from "react-native-modal";
 //TODO -fix bug that prevents you from picking the first elem in picker
 export default props => (
   <EventConsumer>
     {contextProp => <EventCreationPage contextProp={contextProp} {...props} />}
   </EventConsumer>
 );
-
+//if event is repeated add copies during nsd step
 const categories = [
   {
     type: "event",
@@ -39,19 +40,38 @@ const categories = [
     color: "#80BD6A"
   }
 ];
+const weekDays = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday"
+];
+const repeatedDays = [false, false, false, false, false, false, false];
 class EventCreationPage extends Component {
   componentDidMount() {
     this.setState({ finishedSelection: "red" });
     this.setState({ dueDate: this.props.contextProp.state.nextSevenDays[0] });
     this.findPos();
   }
-
+  displayAMPM() {
+    if (this.state.ampm) {
+      return "am";
+    } else {
+      return "pm";
+    }
+  }
   state = {
+    repeatedDays: [false, false, false, false, false, false, false],
+    showRepeatedSelection: false,
+    repeated: false,
     category: categories[0],
     title: "",
     dueDate: "",
     dueTime: "12:00",
-    duration: 0,
+    duration: 1,
     finishedSelection: "blue",
     qpos: -1,
     ampm: false,
@@ -95,6 +115,30 @@ class EventCreationPage extends Component {
     let x = 60 * this.state.duration;
     return x;
   }
+  renderDaySwitch(index) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          alignItems: "space-between",
+          justifyContent: "space-around",
+          flexDirection: "row"
+        }}
+      >
+        <Text>{weekDays[index]}</Text>
+        <Switch
+          value={this.state.repeatedDays[index]}
+          onValueChange={() => {
+            var x = this.state.repeatedDays.slice(0);
+            x[index] = !this.state.repeatedDays[index];
+            return this.setState({
+              repeatedDays: x
+            });
+          }}
+        />
+      </View>
+    );
+  }
   findStartSlot() {
     const x = parseInt(this.state.dueTime, 10);
     var z = 0;
@@ -120,6 +164,10 @@ class EventCreationPage extends Component {
     temp.dueTime = this.state.dueTime;
     temp.content = this.state.title;
     temp.dueDate = this.state.dueDate;
+    if (this.state.repeated) {
+      temp.repeatedDays = this.state.repeatedDays;
+      this.props.contextProp.setRepeatedEvents(temp);
+    }
     this.props.contextProp.addUpcomingEvent(temp);
     let arr = queue.slice();
     arr.splice(this.state.qpos, 1);
@@ -150,47 +198,83 @@ class EventCreationPage extends Component {
             step={0.25}
             onSlidingComplete={value => this.setState({ duration: value })}
           />
+          <Text>Duration: {this.state.duration} hrs</Text>
           <Slider
             value={1}
-            minimumuValue={1}
-            maximumValue={3}
+            minimumuValue={0}
+            maximumValue={2}
             step={1}
             style={{ width: 250 }}
             onSlidingComplete={value =>
-              this.setState({ category: categories[value - 1] })
+              this.setState({ category: categories[value] })
             }
           />
+          <Text>Event Type is: {this.state.category.type}</Text>
           <Input
             value={this.state.title}
             onChangeText={value => this.setState({ title: value })}
           />
-          <Picker
-            selectedValue={this.state && this.state.dueDate}
-            onValueChange={value =>
-              this.setState({ dueDate: nextSevenDays[value] })
-            }
-            style={{ height: 50, width: 100 }}
-          >
-            {nextSevenDays.map((item, index) => {
-              return <Picker.Item label={item} value={index} key={index} />;
-            })}
-          </Picker>
-          <Picker
-            selectedValue={this.state && this.state.dueTime}
-            onValueChange={value =>
-              this.setState({ dueTime: this.state.timeChoice[value] })
-            }
-            style={{ height: 50, width: 100 }}
-          >
-            {this.state.timeChoice.map((item, index) => {
-              return <Picker.Item label={item} value={index} key={index} />;
-            })}
-          </Picker>
+          <Section style={{ flexDirection: "row" }}>
+            <Picker
+              selectedValue={this.state && this.state.dueDate}
+              onValueChange={value =>
+                this.setState({ dueDate: nextSevenDays[value] })
+              }
+              style={{ height: 50, width: 100 }}
+            >
+              {nextSevenDays.map((item, index) => {
+                return <Picker.Item label={item} value={index} key={index} />;
+              })}
+            </Picker>
+            <Picker
+              selectedValue={this.state && this.state.dueTime}
+              onValueChange={value =>
+                this.setState({ dueTime: this.state.timeChoice[value] })
+              }
+              style={{ height: 50, width: 100 }}
+            >
+              {this.state.timeChoice.map((item, index) => {
+                return <Picker.Item label={item} value={index} key={index} />;
+              })}
+            </Picker>
+            <Switch
+              value={this.state.ampm}
+              onValueChange={value => this.setState({ ampm: !this.state.ampm })}
+            />
+          </Section>
+          <Text>
+            {" "}
+            {this.state.dueDate} {this.state.dueTime}
+            {this.displayAMPM()}
+          </Text>
+        </Section>
+        <Section style={{ flexDirection: "row" }}>
           <Switch
-            value={this.state.ampm}
-            onValueChange={value => this.setState({ ampm: !this.state.ampm })}
+            value={this.state.repeated}
+            onValueChange={value =>
+              this.setState({ repeated: !this.state.repeated })
+            }
+          />
+          <RainbowButton
+            onPress={() => this.setState({ showRepeatedSelection: true })}
           />
         </Section>
+        <Modal isVisible={this.state.showRepeatedSelection}>
+          <View style={{ flex: 1, backgroundColor: "white" }}>
+            <Text>Select repeated days</Text>
+            {this.renderDaySwitch(0)}
+            {this.renderDaySwitch(1)}
+            {this.renderDaySwitch(2)}
+            {this.renderDaySwitch(3)}
+            {this.renderDaySwitch(4)}
+            {this.renderDaySwitch(5)}
+            {this.renderDaySwitch(6)}
+            <Text>{this.state.repeatedDays[0]}</Text>
+            <RainbowButton
+              onPress={() => this.setState({ showRepeatedSelection: false })}
+            />
+          </View>
+        </Modal>
         <Section>
           <RainbowButton onPress={this.setValue} />
           <Text style={{ color: "yellow" }}>{this.state.dueTime}</Text>

@@ -6,6 +6,7 @@ export const EventConsumer = EventContext.Consumer;
 
 class EventProvider extends Component {
   state = {
+    repeatedEvents: [],
     dailyEvents: [[], [], []],
     queue: [],
     upcomingEvents: [],
@@ -75,8 +76,12 @@ class EventProvider extends Component {
             this.setState({
               dailyEvents: list
             }),
-          setNeedsUpdate: () =>
-            this.setState({ needsUpdate: !this.state.needsUpdate })
+          // setNeedsUpdate: () =>
+          //   this.setState({ needsUpdate: !this.state.needsUpdate }),
+          setRepeatedEvents: revent =>
+            this.setState({
+              repeatedEvents: this.state.repeatedEvents.concat([revent])
+            })
         }}
       >
         {this.props.children}

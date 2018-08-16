@@ -48,7 +48,7 @@ class HomePage extends Component {
           alignSelf: "stretch"
         }}
       >
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, alignItems: "center" }}>
           {dailyEvents[0].map(item => {
             return (
               <View
@@ -57,7 +57,7 @@ class HomePage extends Component {
                   alignItems: "center",
                   borderRadius: 100,
                   width: 100,
-                  height: item.length,
+                  height: item.length / 10,
                   backgroundColor: item.category.color
                 }}
               >
@@ -66,7 +66,15 @@ class HomePage extends Component {
             );
           })}
         </View>
-        <View style={{ flex: 1 }}>
+        <View
+          style={{
+            flex: 1,
+            borderLeftWidth: 1,
+            borderRightWidth: 1,
+            borderColor: "white",
+            alignItems: "center"
+          }}
+        >
           {dailyEvents[1].map(item => {
             return (
               <View
@@ -75,7 +83,7 @@ class HomePage extends Component {
                   alignItems: "center",
                   borderRadius: 100,
                   width: 100,
-                  height: item.length,
+                  height: item.length / 10,
                   backgroundColor: item.category.color
                 }}
               >
@@ -84,7 +92,7 @@ class HomePage extends Component {
             );
           })}
         </View>
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, alignItems: "center" }}>
           {dailyEvents[2].map(item => {
             return (
               <View
@@ -93,7 +101,7 @@ class HomePage extends Component {
                   alignItems: "center",
                   borderRadius: 100,
                   width: 100,
-                  height: item.length,
+                  height: item.length / 10,
                   backgroundColor: item.category.color
                 }}
               >

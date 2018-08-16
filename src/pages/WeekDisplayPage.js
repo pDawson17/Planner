@@ -11,7 +11,15 @@ export default props => (
     {contextProp => <WeekDisplayPage contextProp={contextProp} {...props} />}
   </EventConsumer>
 );
-
+const weekDays = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday"
+];
 class WeekDisplayPage extends Component {
   componentDidMount() {
     this.divideEvents();
@@ -21,13 +29,21 @@ class WeekDisplayPage extends Component {
   };
   divideEvents() {
     let x = [];
-    //change to DueDate later
-    const { upcomingEvents, nextSevenDays } = this.props.contextProp.state;
+    const {
+      upcomingEvents,
+      nextSevenDays,
+      repeatedEvents
+    } = this.props.contextProp.state;
     for (var i = 0; i < 7; i++) {
       let c = []; //container
       for (var j = 0; j < upcomingEvents.length; j++) {
         if (upcomingEvents[j].dueDate === nextSevenDays[i]) {
           c.push(upcomingEvents[j]);
+        }
+      }
+      for (var k = 0; k < repeatedEvents.length; k++) {
+        if (repeatedEvents[k].repeatedDays[i]) {
+          c.push(repeatedEvents[k]);
         }
       }
       x.push(c);

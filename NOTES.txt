@@ -6,8 +6,8 @@ react-native-gifted-chat
 react-native-popup-menu
 
 TODO:
+-scripts for repeated events
 -templates for event creation -- make #1 work & save templates, also add choice before queue!!
--resize weekview to be better
 -write function that allows you to calculate function HEIGHT for stacking safely
 -further options for choosing date beyond nextSevenDays
 -ANIMATIONS
@@ -15,7 +15,18 @@ TODO:
 -repeated events
 -notifications
 -format time to find 'freetime'
--date marking on main calendar
 -weekview event stacking
 -deal w/ events lasting from one day to the next
 -cleaning
+-resize weekview to be better
+-add touchables to events
+-ADD EVENT DELETE
+-convert colors
+
+
+RGBs:
+calendar background (light blue): #0FBCF9
+caledar events: #FF5E57, #0BE881, 3C40C6, #485460, #FFC048
+header background: #1E272E
+todobackground: #F53B57
+additional: #FFDD59, #34E7E4, #EF5777
