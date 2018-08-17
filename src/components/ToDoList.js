@@ -51,7 +51,7 @@ const ToDoList = ({ eventsList }) => {
         renderItem={item => {
           return (
             <View style={styles.taskStyle}>
-              <Text>{item.content}</Text>
+              <Text style={{ color: "white" }}>{item.content}</Text>
             </View>
           );
         }}
@@ -63,8 +63,12 @@ const styles = {
   taskStyle: {
     height: 40,
     alignSelf: "stretch",
-    backgroundColor: "yellow",
-    borderRadius: 100
+    backgroundColor: "transparent",
+    borderRadius: 100,
+    borderColor: "white",
+    borderWidth: 2,
+    width: 230,
+    marginTop: 20
   },
   listStyle: {
     flex: 1,
@@ -74,11 +78,13 @@ const styles = {
   viewStyle: {
     height: 300,
     alignItems: "stretch",
-    backgroundColor: "red",
+    backgroundColor: "#F53B57",
     marginTop: 80,
     marginLeft: 40,
     marginRight: 40,
-    borderRadius: 100
+    borderRadius: 100,
+    justifyContent: "center",
+    alignItems: "center"
   }
 };
 

@@ -55,13 +55,14 @@ class HomePage extends Component {
                 key={item.key}
                 style={{
                   alignItems: "center",
+                  justifyContent: "center",
                   borderRadius: 100,
                   width: 100,
                   height: item.length / 2,
                   backgroundColor: item.category.color
                 }}
               >
-                <Text>{item.content}</Text>
+                <Text style={{ color: "white" }}>{item.content}</Text>
               </View>
             );
           })}
@@ -81,13 +82,14 @@ class HomePage extends Component {
                 key={item.key}
                 style={{
                   alignItems: "center",
+                  justifyContent: "center",
                   borderRadius: 100,
                   width: 100,
                   height: item.length / 2,
                   backgroundColor: item.category.color
                 }}
               >
-                <Text>{item.content}</Text>
+                <Text style={{ color: "white" }}>{item.content}</Text>
               </View>
             );
           })}
@@ -99,13 +101,14 @@ class HomePage extends Component {
                 key={item.key}
                 style={{
                   alignItems: "center",
+                  justifyContent: "center",
                   borderRadius: 100,
                   width: 100,
                   height: item.length / 2,
                   backgroundColor: item.category.color
                 }}
               >
-                <Text>{item.content}</Text>
+                <Text style={{ color: "white" }}>{item.content}</Text>
               </View>
             );
           })}

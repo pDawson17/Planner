@@ -1,10 +1,13 @@
 import React from "react";
 import { TouchableOpacity, Text, View } from "react-native";
 
-const RainbowButton = ({ label, onPress }) => {
+const RainbowButton = props => {
   return (
-    <TouchableOpacity onPress={onPress} style={styles.buttonStyle}>
-      <Text style={styles.labelStyle}>{label}</Text>
+    <TouchableOpacity
+      onPress={props.onPress}
+      style={[styles.buttonStyle, props.style]}
+    >
+      <Text style={styles.labelStyle}>{props.label}</Text>
     </TouchableOpacity>
   );
 };
@@ -21,7 +24,7 @@ const styles = {
     marginRight: 30
   },
   labelStyle: {
-    color: "#707070",
+    color: "white",
     fontSize: 20
   }
 };

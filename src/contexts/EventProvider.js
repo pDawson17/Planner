@@ -6,8 +6,9 @@ export const EventConsumer = EventContext.Consumer;
 
 class EventProvider extends Component {
   state = {
+    forceDivide: false,
     repeatedEvents: [],
-    dailyEvents: [[], [], []],
+    dailyEvents: [[], [], [], [], [], [], []],
     queue: [],
     upcomingEvents: [],
     selectedDate: "",
@@ -44,7 +45,6 @@ class EventProvider extends Component {
       console.log("did not load");
     }
   }
-
   deleteUpcomingEvent(obj) {
     if (obj.repeated) {
       for (var i = 0; i < this.state.repeatedEvents.length; i++) {
@@ -113,7 +113,9 @@ class EventProvider extends Component {
             this.setState({
               repeatedEvents: this.state.repeatedEvents.concat([revent])
             }),
-          deleteEvent: obj => this.deleteUpcomingEvent(obj)
+          deleteEvent: obj => this.deleteUpcomingEvent(obj),
+          divideEvents: () =>
+            this.setState({ forceDivide: !this.state.forceDivide })
         }}
       >
         {this.props.children}

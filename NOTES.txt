@@ -9,14 +9,11 @@ TODO:
 -add task descriptions
 -templates for event creation- add choice when adding to queue
 -write function that allows you to calculate function HEIGHT for stacking safely
--ANIMATIONS
 -sharing page (do last)
 -notifications
 -format time to find 'freetime'
 -deal w/ events lasting from one day to the next
--cleaning
--add touchables to events
--ADD EVENT DELETE
+-add touchables to events on homepage
 -convert colors
 
 

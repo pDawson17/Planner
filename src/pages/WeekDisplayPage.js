@@ -24,6 +24,11 @@ class WeekDisplayPage extends Component {
   componentDidMount() {
     this.divideEvents();
   }
+  componentDidUpdate() {
+    {
+      this.onForceDivide();
+    }
+  }
   state = {
     dailyEvents: [[], [], [], [], [], [], []]
   };
@@ -51,50 +56,55 @@ class WeekDisplayPage extends Component {
     this.props.contextProp.setDailyEvents(x);
     this.setState({ dailyEvents: x });
   }
-
+  onForceDivide() {
+    if (this.props.contextProp.state.forceDivide) {
+      this.divideEvents();
+      this.props.contextProp.divideEvents();
+    }
+  }
   render() {
-    const { nextSevenDays } = this.props.contextProp.state;
+    const { nextSevenDays, dailyEvents } = this.props.contextProp.state;
     return (
       <ScrollView style={{ flex: 1 }} horizontal={true}>
         <View style={{ flex: 1 }}>
           <WeekDayDisplay
             date={nextSevenDays[0]}
-            events={this.state.dailyEvents[0]}
+            events={dailyEvents[0]}
             context={this.props.contextProp}
           />
           <EventDisplay
             date={nextSevenDays[0]}
-            events={this.state.dailyEvents[0]}
+            events={dailyEvents[0]}
             context={this.props.contextProp}
           />
           <EventDisplay
             date={nextSevenDays[1]}
-            events={this.state.dailyEvents[1]}
+            events={dailyEvents[1]}
             context={this.props.contextProp}
           />
           <EventDisplay
             date={nextSevenDays[2]}
-            events={this.state.dailyEvents[2]}
+            events={dailyEvents[2]}
             context={this.props.contextProp}
           />
           <EventDisplay
             date={nextSevenDays[3]}
-            events={this.state.dailyEvents[3]}
+            events={dailyEvents[3]}
             context={this.props.contextProp}
           />
           <EventDisplay
             date={nextSevenDays[4]}
-            events={this.state.dailyEvents[4]}
+            events={dailyEvents[4]}
             context={this.props.contextProp}
           />
           <EventDisplay
             date={nextSevenDays[5]}
-            events={this.state.dailyEvents[5]}
+            events={dailyEvents[5]}
             context={this.props.contextProp}
           />
           <EventDisplay
             date={nextSevenDays[6]}
-            events={this.state.dailyEvents[6]}
+            events={dailyEvents[6]}
             context={this.props.contextProp}
           />
         </View>

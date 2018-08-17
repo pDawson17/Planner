@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { View, Text, TouchableOpacity, Modal } from "react-native";
 
-import { RainbowButton } from "./common";
+import { RainbowButton, IconButton } from "./common";
 //TODO add stacking events
 // props: date, events, context
 class EventDisplay extends Component {
@@ -9,7 +9,7 @@ class EventDisplay extends Component {
     showModal: false,
     currentItem: {}
   };
-
+  deleteOnPress() {}
   render() {
     const hourView = [];
     const timeSlot = {
@@ -96,21 +96,38 @@ class EventDisplay extends Component {
             <Text style={{ color: "white" }}>
               {this.state.currentItem.repeated}
             </Text>
-            <RainbowButton
-              onPress={() => {
-                this.setState({ showModal: false });
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "space-between",
+                justifyContent: "space-between",
+                height: 40,
+                width: 100
               }}
-            />
-            <RainbowButton
-              onPress={() => {
-                this.props.context.deleteEvent(this.state.currentItem);
-                return this.setState({
-                  state: this.state,
-                  showModal: false,
-                  currentItem: {}
-                });
-              }}
-            />
+            >
+              <IconButton
+                color={"#3C40C6"}
+                iconName={"arrow-left"}
+                size={40}
+                onPress={() => {
+                  this.setState({ showModal: false });
+                }}
+              />
+              <IconButton
+                color={"#F53B57"}
+                iconName={"trash"}
+                size={35}
+                onPress={() => {
+                  this.props.context.deleteEvent(this.state.currentItem);
+                  this.props.context.divideEvents();
+                  return this.setState({
+                    state: this.state,
+                    showModal: false,
+                    currentItem: {}
+                  });
+                }}
+              />
+            </View>
           </View>
         </Modal>
       </View>
