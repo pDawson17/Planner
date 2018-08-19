@@ -9,7 +9,7 @@ import {
   ScrollView
 } from "react-native";
 import { EventConsumer } from "../contexts/EventProvider";
-import { CalendarList, Agenda } from "react-native-calendars";
+import { CalendarList } from "react-native-calendars";
 import {
   IconButton,
   Input,

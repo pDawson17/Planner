@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, ScrollView, Modal, TouchableOpacity } from "react-native";
 import { EventConsumer } from "../contexts/EventProvider";
 import { CalendarList, Agenda } from "react-native-calendars";
 import { IconButton, Section } from "../components/common";
@@ -20,7 +20,10 @@ class HomePage extends Component {
     this.generateSevenDays();
     this.props.contextProp.retrieveData;
   }
-
+  state = {
+    showModal: false,
+    currentItem: {}
+  };
   generateSevenDays() {
     let l = [];
     curr = new Date();
@@ -37,33 +40,60 @@ class HomePage extends Component {
     }
     this.props.contextProp.setNextSevenDays(l);
   }
+  findItemHeight(item) {
+    let x = item.length / 60;
+    var y;
+    if (x > 5) {
+      y = 80;
+    } else if (x > 3) {
+      y = 60;
+    } else if (x > 2) {
+      y = 50;
+    } else {
+      y = 40;
+    }
+    return y;
+  }
   renderDayPreview() {
-    const { dailyEvents } = this.props.contextProp.state;
+    const { dailyEvents, nextSevenDays } = this.props.contextProp.state;
     return (
       <View
         style={{
           flexDirection: "row",
           backgroundColor: "#0FBCF9",
-          height: 325,
+          height: 225,
           alignSelf: "stretch"
         }}
       >
         <View style={{ flex: 1, alignItems: "center" }}>
+          <Text
+            style={{
+              fontSize: 25,
+              color: "white"
+            }}
+          >
+            {Date(nextSevenDays[0]).substring(8, 10)}{" "}
+            {Date(nextSevenDays[0]).substring(0, 3)}
+          </Text>
           {dailyEvents[0].map(item => {
             return (
-              <View
+              <TouchableOpacity
                 key={item.key}
                 style={{
                   alignItems: "center",
                   justifyContent: "center",
-                  borderRadius: 100,
-                  width: 100,
-                  height: item.length / 2,
+                  borderRadius: 20,
+                  marginTop: 2,
+                  width: 120,
+                  height: this.findItemHeight(item),
                   backgroundColor: item.category.color
                 }}
+                onPress={() =>
+                  this.setState({ currentItem: item, showModal: true })
+                }
               >
                 <Text style={{ color: "white" }}>{item.content}</Text>
-              </View>
+              </TouchableOpacity>
             );
           })}
         </View>
@@ -76,44 +106,135 @@ class HomePage extends Component {
             alignItems: "center"
           }}
         >
+          <Text
+            style={{
+              fontSize: 25,
+              color: "white"
+            }}
+          >
+            {Date(nextSevenDays[1]).substring(8, 10)}{" "}
+            {Date(nextSevenDays[1]).substring(0, 3)}
+          </Text>
           {dailyEvents[1].map(item => {
             return (
-              <View
+              <TouchableOpacity
                 key={item.key}
                 style={{
                   alignItems: "center",
                   justifyContent: "center",
-                  borderRadius: 100,
-                  width: 100,
-                  height: item.length / 2,
+                  borderRadius: 20,
+                  marginTop: 2,
+                  width: 120,
+                  height: this.findItemHeight(item),
                   backgroundColor: item.category.color
                 }}
+                onPress={() =>
+                  this.setState({ currentItem: item, showModal: true })
+                }
               >
                 <Text style={{ color: "white" }}>{item.content}</Text>
-              </View>
+              </TouchableOpacity>
             );
           })}
         </View>
         <View style={{ flex: 1, alignItems: "center" }}>
+          <Text
+            style={{
+              fontSize: 25,
+              color: "white"
+            }}
+          >
+            {Date(nextSevenDays[2]).substring(8, 10)}{" "}
+            {Date(nextSevenDays[2]).substring(0, 3)}
+          </Text>
           {dailyEvents[2].map(item => {
             return (
-              <View
+              <TouchableOpacity
                 key={item.key}
                 style={{
                   alignItems: "center",
                   justifyContent: "center",
-                  borderRadius: 100,
-                  width: 100,
-                  height: item.length / 2,
+                  borderRadius: 20,
+                  marginTop: 2,
+                  width: 120,
+                  height: this.findItemHeight(item),
                   backgroundColor: item.category.color
                 }}
+                onPress={() =>
+                  this.setState({ currentItem: item, showModal: true })
+                }
               >
                 <Text style={{ color: "white" }}>{item.content}</Text>
-              </View>
+              </TouchableOpacity>
             );
           })}
         </View>
       </View>
+    );
+  }
+  renderEventDetail() {
+    return (
+      <Modal
+        visible={this.state.showModal}
+        onRequestClose={() => this.setState({ showModal: false })}
+        transparent={true}
+        animationType={"slide"}
+      >
+        <View
+          style={{
+            marginLeft: 100,
+            marginTop: 100,
+            height: 400,
+            width: 200,
+            backgroundColor: "#1E272E",
+            alignItems: "center",
+            justifyContent: "space-around",
+            borderRadius: 80
+          }}
+        >
+          <Text style={{ color: "white" }}>
+            {this.state.currentItem.content}
+          </Text>
+          <Text style={{ color: "white" }}>
+            {this.state.currentItem.dueTime}
+          </Text>
+          <Text style={{ color: "white" }}>
+            {this.state.currentItem.repeated}
+          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "space-between",
+              justifyContent: "space-between",
+              height: 40,
+              width: 100
+            }}
+          >
+            <IconButton
+              color={"#3C40C6"}
+              iconName={"arrow-left"}
+              size={40}
+              onPress={() => {
+                this.setState({ showModal: false });
+              }}
+            />
+            <IconButton
+              color={"#F53B57"}
+              iconName={"trash"}
+              size={35}
+              onPress={() => {
+                this.props.contextProp.deleteEvent(this.state.currentItem);
+                this.props.contextProp.divideEvents();
+                return this.setState({
+                  state: this.state,
+                  showModal: false,
+                  currentItem: {}
+                });
+              }}
+            />
+          </View>
+        </View>
+      </Modal>
     );
   }
   render() {
@@ -130,23 +251,34 @@ class HomePage extends Component {
     } = this.props.contextProp;
 
     return (
-      <ScrollView>
-        <View
-          style={{
-            backgroundColor: "#1E272E",
-            height: 200,
-            alignSelf: "stretch",
-            alignItems: "center",
-            justifyContent: "center"
-          }}
-        >
-          <Text style={{ color: "#0FBCF9", fontSize: 70 }}>
-            {Date().substring(3, 7)}
-          </Text>
-        </View>
-        {this.renderDayPreview()}
-        <ToDoList eventsList={upcomingEvents} />
-      </ScrollView>
+      <View>
+        {this.renderEventDetail()}
+        <ScrollView>
+          <View
+            style={{
+              backgroundColor: "#1E272E",
+              height: 100,
+              alignSelf: "stretch",
+              alignItems: "center",
+              justifyContent: "center"
+            }}
+          >
+            <Text style={{ color: "#0FBCF9", fontSize: 70, marginBottom: 10 }}>
+              {Date().substring(3, 7)}
+            </Text>
+          </View>
+          {this.renderDayPreview()}
+          <ToDoList
+            eventsList={upcomingEvents}
+            context={this.props.contextProp}
+          />
+          <View
+            style={{ backgroundColor: "transparent", position: "absolute" }}
+          >
+            <IconButton iconName={"plus-circle"} color={"orange"} size={40} />
+          </View>
+        </ScrollView>
+      </View>
     );
   }
 }

@@ -16,7 +16,12 @@ const HomeNavigator = createBottomTabNavigator(
     WeekDisplay: WeekDisplayPage
   },
   {
-    lazy: false
+    lazy: false,
+    tabBarOptions: {
+      tabStyle: {
+        backgroundColor: "#1E272E"
+      }
+    }
   }
 );
 

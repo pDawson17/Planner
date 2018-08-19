@@ -4,16 +4,22 @@ import { View, Text, TouchableOpacity } from "react-native";
 const QueueDisplay = ({ onPress, item }) => {
   return (
     <TouchableOpacity onPress={onPress} style={styles.buttonStyle}>
-      <Text style={styles.textStyle}> {item.date} </Text>
+      <Text style={styles.textStyle}>
+        {" "}
+        {item.date} {item.content}{" "}
+      </Text>
     </TouchableOpacity>
   );
 };
 
 const styles = {
   buttonStyle: {
-    backgroundColor: "blue",
-    height: 30,
-    alignSelf: "stretch"
+    backgroundColor: "#EF5777",
+    borderRadius: 10,
+    height: 60,
+    alignSelf: "stretch",
+    margin: 2,
+    flexDirection: "row"
   },
   textStyle: {
     color: "white"

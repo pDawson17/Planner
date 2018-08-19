@@ -1,7 +1,8 @@
 import React from "react";
 import { FlatList, View, Text } from "react-native";
+import { IconButton, context } from "./common";
 
-const ToDoList = ({ eventsList }) => {
+const ToDoList = ({ eventsList, context }) => {
   var listClone = eventsList.slice(0);
   var sortedList = [];
   for (var i = 0; i < listClone.length; i++) {
@@ -44,14 +45,48 @@ const ToDoList = ({ eventsList }) => {
   }
   return (
     <View style={styles.viewStyle}>
+      <View>
+        <Text
+          style={{
+            textDecorationLine: "underline",
+            color: "white",
+            fontSize: 40
+          }}
+        >
+          To-Do List
+        </Text>
+      </View>
       <FlatList
         keyExtractor={item => item.key}
         data={sortedList}
         style={styles.listStyle}
         renderItem={item => {
           return (
-            <View style={styles.taskStyle}>
-              <Text style={{ color: "white" }}>{item.content}</Text>
+            <View
+              style={{
+                flexDirection: "row",
+                backgroundColor: "transparent",
+                alignItems: "center"
+              }}
+            >
+              <IconButton
+                iconName={"check-circle-o"}
+                size={30}
+                color={"white"}
+                onPress={() => {
+                  context.deleteEvent(sortedList[item.index]);
+                  context.divideEvents();
+                }}
+              />
+              <View style={styles.taskStyle}>
+                <Text style={{ color: "white", fontSize: 20 }}>
+                  {sortedList[item.index].content}
+                </Text>
+                <Text style={{ color: "#e6e6e6" }}>
+                  by {sortedList[item.index].dueDate}{" "}
+                  {sortedList[item.index].dueTime}
+                </Text>
+              </View>
             </View>
           );
         }}
@@ -64,11 +99,12 @@ const styles = {
     height: 40,
     alignSelf: "stretch",
     backgroundColor: "transparent",
-    borderRadius: 100,
-    borderColor: "white",
-    borderWidth: 2,
+    // borderColor: "white",
+    // borderBottomWidth: 2,
     width: 230,
-    marginTop: 20
+    marginTop: 10,
+    alignItems: "center",
+    justifyContent: "center"
   },
   listStyle: {
     flex: 1,
@@ -76,12 +112,13 @@ const styles = {
     backgroundColor: "#F53B57"
   },
   viewStyle: {
-    height: 300,
+    height: 340,
     alignItems: "stretch",
     backgroundColor: "#F53B57",
-    marginTop: 80,
-    marginLeft: 40,
-    marginRight: 40,
+    marginTop: 40,
+    marginBottom: 40,
+    marginLeft: 20,
+    marginRight: 20,
     borderRadius: 100,
     justifyContent: "center",
     alignItems: "center"

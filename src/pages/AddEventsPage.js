@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { FlatList, View, Text } from "react-native";
+import { FlatList, View, Text, TouchableOpacity } from "react-native";
 import { EventConsumer } from "../contexts/EventProvider";
 import { IconButton } from "../components/common";
 import QueueDisplay from "../components/QueueDisplay";
@@ -22,16 +22,20 @@ class AddEventsPage extends Component {
   render() {
     const { queue, upcomingEvents } = this.props.contextProp.state;
     return (
-      <View>
+      <View style={{ backgroundColor: "#485460" }}>
         <FlatList
+          style={{ height: 600 }}
           renderItem={this._renderItem}
           data={queue}
           extraData={queue}
           keyExtractor={item => item.key}
         />
-        <IconButton
-          iconName="rocket"
-          size={40}
+        <TouchableOpacity
+          style={{
+            height: 60,
+            alignSelf: "stretch",
+            backgroundColor: "#FFDD59"
+          }}
           onPress={this.props.contextProp.addEventToQueue}
         />
       </View>

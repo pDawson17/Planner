@@ -1,20 +1,21 @@
 Libraries to check out:
 rn-sliding-button ---- (slide to press instead of push)
-react-native-animatable
-reat-native-notifications
-react-native-gifted-chat
-react-native-popup-menu
 
 TODO:
 -add task descriptions
 -templates for event creation- add choice when adding to queue
 -write function that allows you to calculate function HEIGHT for stacking safely
--sharing page (do last)
 -notifications
+-properly format time string& date on homepage components
+-overhaul page 2
+-day label on weekview
+-reformat events for longer text
+-scroll indicator to white
+
+later:
 -format time to find 'freetime'
 -deal w/ events lasting from one day to the next
--add touchables to events on homepage
--convert colors
+-sharing page
 
 
 RGBs:

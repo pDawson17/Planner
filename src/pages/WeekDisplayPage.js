@@ -65,7 +65,7 @@ class WeekDisplayPage extends Component {
   render() {
     const { nextSevenDays, dailyEvents } = this.props.contextProp.state;
     return (
-      <ScrollView style={{ flex: 1 }} horizontal={true}>
+      <ScrollView style={{ flex: 1 }} horizontal={true} indicatorStyle="white">
         <View style={{ flex: 1 }}>
           <WeekDayDisplay
             date={nextSevenDays[0]}

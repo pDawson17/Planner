@@ -73,7 +73,7 @@ class EventDisplay extends Component {
           visible={this.state.showModal}
           onRequestClose={() => this.setState({ showModal: false })}
           transparent={true}
-          animation={"slide"}
+          animationType={"fade"}
         >
           <View
             style={{
