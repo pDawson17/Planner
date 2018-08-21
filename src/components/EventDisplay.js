@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, Modal } from "react-native";
+import { View, Text, TouchableOpacity } from "react-native";
+import Modal from "react-native-modal";
 
 import { RainbowButton, IconButton } from "./common";
 //TODO add stacking events
@@ -64,14 +65,17 @@ class EventDisplay extends Component {
                 backgroundColor: item.category.color
               }}
             >
-              <Text>{item.content}</Text>
+              <Text numberOfLines={1} style={{ textAlign: "center" }}>
+                {item.content}
+              </Text>
               <Text>{this.props.context.state.selectedDate}</Text>
             </TouchableOpacity>
           );
         })}
         <Modal
-          visible={this.state.showModal}
-          onRequestClose={() => this.setState({ showModal: false })}
+          isVisible={this.state.showModal}
+          onBackButtonPress={() => this.setState({ showModal: false })}
+          onBackdropPress={() => this.setState({ showModal: false })}
           transparent={true}
           animationType={"fade"}
         >
@@ -87,13 +91,13 @@ class EventDisplay extends Component {
               borderRadius: 80
             }}
           >
-            <Text style={{ color: "white" }}>
+            <Text style={{ color: "white", textAlign: "center", padding: 10 }}>
               {this.state.currentItem.content}
             </Text>
-            <Text style={{ color: "white" }}>
+            <Text style={{ color: "white", textAlign: "center" }}>
               {this.state.currentItem.dueTime}
             </Text>
-            <Text style={{ color: "white" }}>
+            <Text style={{ color: "white", textAlign: "center" }}>
               {this.state.currentItem.repeated}
             </Text>
             <View

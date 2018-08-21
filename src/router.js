@@ -8,12 +8,34 @@ import {
   createStackNavigator,
   createSwitchNavigator
 } from "react-navigation";
+import Icon from "react-native-vector-icons/FontAwesome";
 
 const HomeNavigator = createBottomTabNavigator(
   {
-    Home: HomePage,
-    Add: AddEventsPage,
-    WeekDisplay: WeekDisplayPage
+    Home: {
+      screen: HomePage,
+      navigationOptions: {
+        tabBarIcon: () => {
+          return <Icon name="home" size={35} color="white" />;
+        }
+      }
+    },
+    Add: {
+      screen: AddEventsPage,
+      navigationOptions: {
+        tabBarIcon: () => {
+          return <Icon name="plus-circle" size={35} color="white" />;
+        }
+      }
+    },
+    WeekDisplay: {
+      screen: WeekDisplayPage,
+      navigationOptions: {
+        tabBarIcon: () => {
+          return <Icon name="columns" size={35} color="white" />;
+        }
+      }
+    }
   },
   {
     lazy: false,

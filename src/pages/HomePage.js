@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { View, Text, ScrollView, Modal, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Slider } from "react-native";
 import { EventConsumer } from "../contexts/EventProvider";
 import { CalendarList, Agenda } from "react-native-calendars";
-import { IconButton, Section } from "../components/common";
+import { IconButton, Section, Input } from "../components/common";
+import Modal from "react-native-modal";
 import ToDoList from "../components/ToDoList";
 
 export default props => (
@@ -22,6 +23,7 @@ class HomePage extends Component {
   }
   state = {
     showModal: false,
+    showAddButton: false,
     currentItem: {}
   };
   generateSevenDays() {
@@ -55,6 +57,7 @@ class HomePage extends Component {
     return y;
   }
   renderDayPreview() {
+    var x = new Date();
     const { dailyEvents, nextSevenDays } = this.props.contextProp.state;
     return (
       <View
@@ -92,7 +95,16 @@ class HomePage extends Component {
                   this.setState({ currentItem: item, showModal: true })
                 }
               >
-                <Text style={{ color: "white" }}>{item.content}</Text>
+                <Text
+                  style={{
+                    color: "white",
+                    textAlign: "center",
+                    padding: 10
+                  }}
+                  numberOfLines={2}
+                >
+                  {item.content}
+                </Text>
               </TouchableOpacity>
             );
           })}
@@ -132,7 +144,16 @@ class HomePage extends Component {
                   this.setState({ currentItem: item, showModal: true })
                 }
               >
-                <Text style={{ color: "white" }}>{item.content}</Text>
+                <Text
+                  style={{
+                    color: "white",
+                    textAlign: "center",
+                    padding: 10
+                  }}
+                  numberOfLines={2}
+                >
+                  {item.content}
+                </Text>
               </TouchableOpacity>
             );
           })}
@@ -164,7 +185,16 @@ class HomePage extends Component {
                   this.setState({ currentItem: item, showModal: true })
                 }
               >
-                <Text style={{ color: "white" }}>{item.content}</Text>
+                <Text
+                  style={{
+                    color: "white",
+                    textAlign: "center",
+                    padding: 10
+                  }}
+                  numberOfLines={2}
+                >
+                  {item.content}
+                </Text>
               </TouchableOpacity>
             );
           })}
@@ -175,10 +205,10 @@ class HomePage extends Component {
   renderEventDetail() {
     return (
       <Modal
-        visible={this.state.showModal}
-        onRequestClose={() => this.setState({ showModal: false })}
+        isVisible={this.state.showModal}
+        onBackButtonPress={() => this.setState({ showModal: false })}
+        onBackdropPress={() => this.setState({ showModal: false })}
         transparent={true}
-        animationType={"slide"}
       >
         <View
           style={{
@@ -192,13 +222,13 @@ class HomePage extends Component {
             borderRadius: 80
           }}
         >
-          <Text style={{ color: "white" }}>
+          <Text style={{ color: "white", textAlign: "center", padding: 10 }}>
             {this.state.currentItem.content}
           </Text>
-          <Text style={{ color: "white" }}>
+          <Text style={{ color: "white", textAlign: "center" }}>
             {this.state.currentItem.dueTime}
           </Text>
-          <Text style={{ color: "white" }}>
+          <Text style={{ color: "white", textAlign: "center" }}>
             {this.state.currentItem.repeated}
           </Text>
           <View
@@ -237,6 +267,36 @@ class HomePage extends Component {
       </Modal>
     );
   }
+  renderAddButton() {
+    return (
+      <Modal
+        isVisible={this.state.showAddButton}
+        onBackButtonPress={() => this.setState({ showAddButton: false })}
+        onBackdropPress={() => this.setState({ showAddButton: false })}
+        backdropOpacity={0}
+        animationIn={"bounce"}
+        animationOut={"bounceOutRight"}
+      >
+        <View
+          style={{
+            top: 380,
+            left: 330,
+            alignItems: "flex-start",
+            backgroundColor: "transparent",
+            marginBottom: 400
+          }}
+        >
+          <IconButton
+            iconName={"rocket"}
+            color={"orange"}
+            size={40}
+            style={{ marginBottom: 20 }}
+          />
+          <Slider style={{ marginBottom: 20 }} />
+        </View>
+      </Modal>
+    );
+  }
   render() {
     const {
       selectedDate,
@@ -253,7 +313,8 @@ class HomePage extends Component {
     return (
       <View>
         {this.renderEventDetail()}
-        <ScrollView>
+        {this.renderAddButton()}
+        <ScrollView style={{ backgroundColor: "#1E272E" }}>
           <View
             style={{
               backgroundColor: "#1E272E",
@@ -272,12 +333,14 @@ class HomePage extends Component {
             eventsList={upcomingEvents}
             context={this.props.contextProp}
           />
-          <View
-            style={{ backgroundColor: "transparent", position: "absolute" }}
-          >
-            <IconButton iconName={"plus-circle"} color={"orange"} size={40} />
-          </View>
         </ScrollView>
+        <IconButton
+          styles={{ position: "absolute", bottom: 10, right: 10 }}
+          iconName={"plus-circle"}
+          color={"orange"}
+          size={80}
+          onPress={() => this.setState({ showAddButton: true })}
+        />
       </View>
     );
   }

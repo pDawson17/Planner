@@ -79,7 +79,15 @@ const ToDoList = ({ eventsList, context }) => {
                 }}
               />
               <View style={styles.taskStyle}>
-                <Text style={{ color: "white", fontSize: 20 }}>
+                <Text
+                  numberOfLines={1}
+                  style={{
+                    color: "white",
+                    fontSize: 20,
+                    textAlign: "center",
+                    padding: 2
+                  }}
+                >
                   {sortedList[item.index].content}
                 </Text>
                 <Text style={{ color: "#e6e6e6" }}>
@@ -96,7 +104,7 @@ const ToDoList = ({ eventsList, context }) => {
 };
 const styles = {
   taskStyle: {
-    height: 40,
+    height: 42,
     alignSelf: "stretch",
     backgroundColor: "transparent",
     // borderColor: "white",

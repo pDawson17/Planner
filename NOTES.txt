@@ -7,11 +7,8 @@ TODO:
 -write function that allows you to calculate function HEIGHT for stacking safely
 -notifications
 -properly format time string& date on homepage components
--overhaul page 2
 -day label on weekview
--reformat events for longer text
 -scroll indicator to white
-
 later:
 -format time to find 'freetime'
 -deal w/ events lasting from one day to the next
