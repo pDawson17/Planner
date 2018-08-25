@@ -34,6 +34,7 @@ class WeekDisplayPage extends Component {
   };
   divideEvents() {
     let x = [];
+    const weekDay = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     const {
       upcomingEvents,
       nextSevenDays,
@@ -46,8 +47,17 @@ class WeekDisplayPage extends Component {
           c.push(upcomingEvents[j]);
         }
       }
+      var cu = new Date();
+      var curr = cu.toString().substring(0, 3);
+      var holder;
+      for (var l = 0; l < 7; l++) {
+        if (curr === weekDay[l]) {
+          holder = l;
+        }
+      }
+
       for (var k = 0; k < repeatedEvents.length; k++) {
-        if (repeatedEvents[k].repeatedDays[i]) {
+        if (repeatedEvents[k].repeatedDays[(i + holder) % 7]) {
           c.push(repeatedEvents[k]);
         }
       }
@@ -62,53 +72,130 @@ class WeekDisplayPage extends Component {
       this.props.contextProp.divideEvents();
     }
   }
+  findDate(y) {
+    var x = new Date(y);
+    var z = x.toString().substring(0, 3);
+    return z;
+  }
   render() {
     const { nextSevenDays, dailyEvents } = this.props.contextProp.state;
     return (
-      <ScrollView style={{ flex: 1 }} horizontal={true} indicatorStyle="white">
-        <View style={{ flex: 1 }}>
-          <WeekDayDisplay
-            date={nextSevenDays[0]}
-            events={dailyEvents[0]}
-            context={this.props.contextProp}
-          />
-          <EventDisplay
-            date={nextSevenDays[0]}
-            events={dailyEvents[0]}
-            context={this.props.contextProp}
-          />
-          <EventDisplay
-            date={nextSevenDays[1]}
-            events={dailyEvents[1]}
-            context={this.props.contextProp}
-          />
-          <EventDisplay
-            date={nextSevenDays[2]}
-            events={dailyEvents[2]}
-            context={this.props.contextProp}
-          />
-          <EventDisplay
-            date={nextSevenDays[3]}
-            events={dailyEvents[3]}
-            context={this.props.contextProp}
-          />
-          <EventDisplay
-            date={nextSevenDays[4]}
-            events={dailyEvents[4]}
-            context={this.props.contextProp}
-          />
-          <EventDisplay
-            date={nextSevenDays[5]}
-            events={dailyEvents[5]}
-            context={this.props.contextProp}
-          />
-          <EventDisplay
-            date={nextSevenDays[6]}
-            events={dailyEvents[6]}
-            context={this.props.contextProp}
-          />
-        </View>
-      </ScrollView>
+      <View>
+        <ScrollView horizontal={true} indicatorStyle="white">
+          <View style={{ flex: 1 }}>
+            <WeekDayDisplay
+              date={nextSevenDays[0]}
+              events={dailyEvents[0]}
+              context={this.props.contextProp}
+            />
+            <EventDisplay
+              date={nextSevenDays[0]}
+              events={dailyEvents[0]}
+              context={this.props.contextProp}
+            />
+            <EventDisplay
+              date={nextSevenDays[1]}
+              events={dailyEvents[1]}
+              context={this.props.contextProp}
+            />
+            <EventDisplay
+              date={nextSevenDays[2]}
+              events={dailyEvents[2]}
+              context={this.props.contextProp}
+            />
+            <EventDisplay
+              date={nextSevenDays[3]}
+              events={dailyEvents[3]}
+              context={this.props.contextProp}
+            />
+            <EventDisplay
+              date={nextSevenDays[4]}
+              events={dailyEvents[4]}
+              context={this.props.contextProp}
+            />
+            <EventDisplay
+              date={nextSevenDays[5]}
+              events={dailyEvents[5]}
+              context={this.props.contextProp}
+            />
+            <EventDisplay
+              date={nextSevenDays[6]}
+              events={dailyEvents[6]}
+              context={this.props.contextProp}
+            />
+          </View>
+        </ScrollView>
+        <Text
+          style={{
+            position: "absolute",
+            color: "white",
+            top: 60,
+            fontSize: 40
+          }}
+        >
+          {this.findDate(nextSevenDays[1])}
+        </Text>
+        <Text
+          style={{
+            position: "absolute",
+            color: "white",
+            top: 140,
+            fontSize: 40
+          }}
+        >
+          {this.findDate(nextSevenDays[2])}
+        </Text>
+        <Text
+          style={{
+            position: "absolute",
+            color: "white",
+            top: 230,
+            fontSize: 40
+          }}
+        >
+          {this.findDate(nextSevenDays[3])}
+        </Text>
+        <Text
+          style={{
+            position: "absolute",
+            color: "white",
+            top: 320,
+            fontSize: 40
+          }}
+        >
+          {this.findDate(nextSevenDays[4])}
+        </Text>
+        <Text
+          style={{
+            position: "absolute",
+            color: "white",
+            top: 410,
+            fontSize: 40
+          }}
+        >
+          {this.findDate(nextSevenDays[5])}
+        </Text>
+        <Text
+          style={{
+            position: "absolute",
+            color: "white",
+            top: 500,
+            fontSize: 40
+          }}
+        >
+          {this.findDate(nextSevenDays[6])}
+        </Text>
+        <Text
+          style={{
+            position: "absolute",
+            color: "white",
+            top: 590,
+            fontSize: 40
+          }}
+        >
+          {this.findDate(nextSevenDays[0])}
+        </Text>
+      </View>
     );
   }
 }

@@ -6,7 +6,7 @@ const QueueDisplay = ({ onPress, item }) => {
     <TouchableOpacity onPress={onPress} style={styles.buttonStyle}>
       <Text style={styles.textStyle}>
         {" "}
-        {item.date} {item.content}{" "}
+        {item.date} {item.comment}{" "}
       </Text>
     </TouchableOpacity>
   );

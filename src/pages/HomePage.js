@@ -24,7 +24,8 @@ class HomePage extends Component {
   state = {
     showModal: false,
     showAddButton: false,
-    currentItem: {}
+    currentItem: {},
+    comment: ""
   };
   generateSevenDays() {
     let l = [];
@@ -41,6 +42,11 @@ class HomePage extends Component {
       l.push(day);
     }
     this.props.contextProp.setNextSevenDays(l);
+  }
+  findDate(y) {
+    var x = new Date(y);
+    var z = x.toString().substring(8, 10) + " " + x.toString().substring(0, 3);
+    return z;
   }
   findItemHeight(item) {
     let x = item.length / 60;
@@ -75,8 +81,7 @@ class HomePage extends Component {
               color: "white"
             }}
           >
-            {Date(nextSevenDays[0]).substring(8, 10)}{" "}
-            {Date(nextSevenDays[0]).substring(0, 3)}
+            {this.findDate(nextSevenDays[1])}
           </Text>
           {dailyEvents[0].map(item => {
             return (
@@ -124,8 +129,7 @@ class HomePage extends Component {
               color: "white"
             }}
           >
-            {Date(nextSevenDays[1]).substring(8, 10)}{" "}
-            {Date(nextSevenDays[1]).substring(0, 3)}
+            {this.findDate(nextSevenDays[2])}
           </Text>
           {dailyEvents[1].map(item => {
             return (
@@ -165,8 +169,7 @@ class HomePage extends Component {
               color: "white"
             }}
           >
-            {Date(nextSevenDays[2]).substring(8, 10)}{" "}
-            {Date(nextSevenDays[2]).substring(0, 3)}
+            {this.findDate(nextSevenDays[3])}
           </Text>
           {dailyEvents[2].map(item => {
             return (
@@ -288,9 +291,14 @@ class HomePage extends Component {
         >
           <IconButton
             iconName={"rocket"}
+            onPress={this.props.contextProp.addEventToQueue(this.state.comment)}
             color={"orange"}
             size={40}
             style={{ marginBottom: 20 }}
+          />
+          <Input
+            value={this.state.comment}
+            onChangeText={value => this.setState({ comment: value })}
           />
           <Slider style={{ marginBottom: 20 }} />
         </View>

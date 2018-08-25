@@ -81,10 +81,11 @@ class EventProvider extends Component {
             this.setState({
               upcomingEvents: this.state.upcomingEvents.concat([obj])
             }),
-          addEventToQueue: () =>
+          addEventToQueue: comment =>
             this.setState({
               queue: this.state.queue.concat([
                 {
+                  comment,
                   key: Date(),
                   date: this.state.currentDate,
                   content: "",
